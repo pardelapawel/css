@@ -12,8 +12,11 @@ def load_dataset(csv_path: Optional[str] = None, header: Optional[List[str]] = N
         # to save space, we provide a pre-filtered dataset
         csv_path = os.path.abspath("css.csv")
     df = pd.read_csv(csv_path)
+    print(f'Loaded {len(df)} records from {csv_path}')
+    print(f'Columns: {df.columns}')
     df = df[header]
     df = df.dropna()
+    print('Adding column "combined"')
     df['combined'] = df.apply(
         lambda row: '; '.join([f'{h}: {row.get(h, "__noname__")}' for h in header]),
         axis=1
